@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useContext } from "react";
 import { authDataContext } from './AuthContext';
 import axios from 'axios';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export const listingDataContext = createContext()
 
@@ -19,12 +20,15 @@ let [backendImage3, setBackendImage3] = useState("")
 let [rent, setRent] = useState("")
 let [city, setCity] = useState("")
 let [landmark, setLandmark] = useState("")
+let [adding, setAdding] = useState(false)
 let [category, setCategory] = useState("")
 
 let {serverUrl} = useContext(authDataContext)
+let navigate = useNavigate()
 
 
 const handleAddListing = async()=>{
+  setAdding(true)
     try {
         let formData = new FormData()
 
@@ -38,12 +42,27 @@ const handleAddListing = async()=>{
         formData.append("landmark", landmark)
         formData.append("category", category)
 
-        let result = await axios.post( serverUrl + "/api/listing/add", formData, {withCredentials: true} )
+        let result = await axios.post( serverUrl + "/api/listing/add",
+           formData, {withCredentials: true} )
 
+        setAdding(false)   
         console.log(result);
-        
+        navigate("/")
+        setTitle("")
+        setDescription("")
+        setFrontEndImage1(null)
+        setFrontEndImage2(null)
+        setFrontEndImage3(null)
+        setBackEndImage1(null)
+        setBackEndImage2(null)
+        setBackEndImage3(null)
+        setRent("")
+        setCity("")
+        setLandmark("")
+        setCategory("")
 
         } catch (error) {
+        setAdding(false)
         console.log(error);
         
       }
@@ -61,7 +80,9 @@ let value={
     rent, setRent,
     city, setCity,
     landmark, setLandmark,
-    category, setCategory
+    category, setCategory,
+    adding, setAdding,
+    handleAddListing
 }
   return (
     <div>

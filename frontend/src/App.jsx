@@ -1,20 +1,26 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Login from './pages/Login'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Signup from './pages/Signup'
 import ListingPage1 from './pages/ListingPage1.jsx'
 import ListingPage2 from './pages/ListingPage2.jsx'
+import ListingPage3 from './pages/ListingPage3.jsx'
+import { UserDataContext } from './context/UserContext.jsx'
 
 function App() {
+
+let {userData} = useContext(UserDataContext)
+
   return (
     <div>
      <Routes>
       <Route path='/' element={<Home/>} />
       <Route path='/signup' element={<Signup/>} />
       <Route path='/login' element={<Login/>} />
-      <Route path='/listingpage1' element={<ListingPage1/>} />
-      <Route path='/listingpage2' element={<ListingPage2/>} />
+      <Route path='/listingpage1' element={ userData ? <ListingPage1/> : <Navigate to = {"/login"} /> } />
+      <Route path='/listingpage2' element={ userData ? <ListingPage2/> : <Navigate to = {"/login"} /> } />
+      <Route path='/listingpage3' element={ userData ? <ListingPage3/> : <Navigate to = {"/login"} /> } />
      </Routes>
     </div>
   )

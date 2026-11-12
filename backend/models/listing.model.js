@@ -45,6 +45,7 @@ const listingSchema = new mongoose.Schema({
     },
     isBooked:{
         type:Boolean,
+        default: false,
         required: true  
     }
 
