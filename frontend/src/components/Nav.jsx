@@ -18,12 +18,15 @@ import axios from "axios";
 import { useContext } from "react";
 import { authDataContext } from "../context/AuthContext";
 import { UserDataContext } from "../context/UserContext";
+import { listingDataContext } from "../context/ListingContext";
 
 function Nav() {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
   let { serverUrl } = useContext(authDataContext);
+  let [cate, setCate] = useState()
+  let {listingData, setListingData} = useContext(listingDataContext)
   let { userData, setUserData } = useContext(UserDataContext);
 
   const handleLogout = async () => {
@@ -38,13 +41,18 @@ function Nav() {
     } catch (error) {
       console.log(error);
     }
-  };
+  }
+
+const handleCategory=(category)=>{
+    setCate(category)
+    listingData.filter((list)=>list.category==category)
+}
+
   return (
-    <div>
+    <div className="sticky top-0 z-50 bg-white" >
       <div className="w-full min-h-22.5 border-b  px-[20px] flex items-center justify-between md:px-[40px] ">
-        <div>
-          {" "}
-          <img src={logo} alt="" className="h-[85px]  " />{" "}
+        
+         <div> <img src={logo} alt="" className="h-[85px]  " />
         </div>
         <div className="w-[35%] flex relative hidden md:block  ">
           <input
@@ -156,7 +164,7 @@ function Nav() {
           <h3>Trending</h3>
         </div>
 
-        <div className=" flex items-center justify-center flex-col hover:border-b-[1px] border-[#a6a5a5] text-[13px] ">
+        <div className={`flex items-center justify-center flex-col hover:border-b-[1px] border-[#a6a5a5] text-[13px] ${cate=="villa" ? "border-b-[1px] border-[#a6a5a5]" : "" } `}>
           <GiFamilyHouse className=" w-[30px] h-[30px] text-black " />
           <h3>Villa</h3>
         </div>

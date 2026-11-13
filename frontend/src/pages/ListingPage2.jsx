@@ -45,7 +45,7 @@ let {category, setCategory} = useContext(listingDataContext)
             <h3 className='text-md'>Villa</h3>
           </div>
 
-          <div className={`border-[2px] h-24 rounded-md flex flex-col items-center cursor-pointer justify-center text-[16px] border-gray-400 hover:border-gray-500 w-full max-w-[200px] ${category=="farmhouse" ? "border-[3px] border-gray-500" : ""}`} onClick={(e)=> setCategory("farmhouse")} >
+          <div className={`border-[2px] h-24 rounded-md flex flex-col items-center cursor-pointer justify-center text-[16px] border-gray-400 hover:border-gray-500 w-full max-w-[200px] ${category=="farmHouse" ? "border-[3px] border-gray-500" : ""}`} onClick={(e)=> setCategory("farmHouse")} >
             <MdBedroomParent className='w-[30px] h-[30px] text-black' />
             <h3 className='text-md'>Farm House</h3>
           </div>

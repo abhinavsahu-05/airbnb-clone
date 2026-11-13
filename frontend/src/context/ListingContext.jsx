@@ -1,4 +1,4 @@
-import React, { createContext } from 'react'
+import React, { createContext, useEffect } from 'react'
 import { useState } from 'react';
 import { useContext } from "react";
 import { authDataContext } from './AuthContext';
@@ -21,6 +21,7 @@ let [rent, setRent] = useState("")
 let [city, setCity] = useState("")
 let [landmark, setLandmark] = useState("")
 let [adding, setAdding] = useState(false)
+let [listingData, setListingData] = useState([])
 let [category, setCategory] = useState("")
 
 let {serverUrl} = useContext(authDataContext)
@@ -68,6 +69,21 @@ const handleAddListing = async()=>{
       }
 }
 
+const getListing = async()=>{
+  try {
+    let result = await axios.get(serverUrl + "/api/listing/get", {withCredentials:true})
+    setListingData(result.data)
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
+useEffect(() => {
+  getListing()
+}, [adding])
+
+
 let value={
     title,setTitle,
     description, setDescription,
@@ -82,7 +98,9 @@ let value={
     landmark, setLandmark,
     category, setCategory,
     adding, setAdding,
-    handleAddListing
+    handleAddListing,
+    listingData, setListingData,
+    getListing
 }
   return (
     <div>
