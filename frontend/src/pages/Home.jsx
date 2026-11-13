@@ -5,13 +5,13 @@ import Card from '../components/Card'
 
 function Home() {
 
-  let {listingData, setListingData} = useContext(listingDataContext)
+  let {listingData, setListingData, newListData} = useContext(listingDataContext)
 
   return (
     <div>
   <Nav />
   <div className='w-[100vw] flex items-center justify-center gap-[25px] flex-wrap mt-[250px] md:mt-[180px]'>
-    {listingData.map((list) => (
+    {newListData.map((list) => (
       <Card
         title={list.title}
         landmark={list.landmark}

@@ -23,6 +23,7 @@ let [landmark, setLandmark] = useState("")
 let [adding, setAdding] = useState(false)
 let [listingData, setListingData] = useState([])
 let [category, setCategory] = useState("")
+ let [newListData, setNewListData] = useState([])
 
 let {serverUrl} = useContext(authDataContext)
 let navigate = useNavigate()
@@ -73,6 +74,7 @@ const getListing = async()=>{
   try {
     let result = await axios.get(serverUrl + "/api/listing/get", {withCredentials:true})
     setListingData(result.data)
+    setNewListData(result.data)
   } catch (error) {
     console.log(error);
     
@@ -100,7 +102,7 @@ let value={
     adding, setAdding,
     handleAddListing,
     listingData, setListingData,
-    getListing
+    getListing, newListData, setNewListData
 }
   return (
     <div>
