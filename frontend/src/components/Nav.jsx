@@ -133,7 +133,7 @@ function Nav() {
                 </li>
                 <li
                   className=" w-[100%] px-[15px] py-[10px] hover:bg-[#f4f3f3] cursor-pointer "
-                  onClick={() => setShowPopup(true)}
+                  onClick={() => {setShowPopup(true); navigate("/mylisting") }}
                 >
                   My Listing
                 </li>
@@ -191,9 +191,9 @@ function Nav() {
         {/* Farm House */}
         <div
           className={`flex items-center justify-center flex-col hover:border-b-[1px] border-[#a6a5a5] text-[13px] text-nowrap ${
-            cate == "farmhouse" ? "border-b-[1px] border-[#a6a5a5]" : ""
+            cate == "farmHouse" ? "border-b-[1px] border-[#a6a5a5]" : ""
           }`}
-          onClick={() => handleCategory("farmhouse")}
+          onClick={() => handleCategory("farmHouse")}
         >
           <MdBedroomParent className="w-[30px] h-[30px] text-black" />
           <h3>Farm House</h3>

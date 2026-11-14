@@ -16,15 +16,15 @@ const userSchema = new Schema({
         required: true
     },
 
-    listing : {
+    listing : [{
         type: Schema.Types.ObjectId,
         ref: "Listing"
-    },
+    }],
 
-    Booking : {
+    Booking : [{
          type: Schema.Types.ObjectId,
         ref: "Listing"
-    }
+    }]
 }, {timestamps: true})
 
 export const User = mongoose.model("User", userSchema)

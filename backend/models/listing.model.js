@@ -49,7 +49,6 @@ const listingSchema = new mongoose.Schema({
         required: true  
     }
 
-
 }, {timestamps:true})
 
 export const Listing = mongoose.model("Listing", listingSchema)
