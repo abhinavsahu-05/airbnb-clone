@@ -21,9 +21,12 @@ let [rent, setRent] = useState("")
 let [city, setCity] = useState("")
 let [landmark, setLandmark] = useState("")
 let [adding, setAdding] = useState(false)
+let [updating, setUpdating] = useState(false)
+let [deleting, setDeleting] = useState(false)
 let [listingData, setListingData] = useState([])
 let [category, setCategory] = useState("")
  let [newListData, setNewListData] = useState([])
+ let [cardDetails, setCardDetails] = useState(null)
 
 let {serverUrl} = useContext(authDataContext)
 let navigate = useNavigate()
@@ -35,9 +38,9 @@ const handleAddListing = async()=>{
         let formData = new FormData()
 
         formData.append("title", title)
-        formData.append("image1", backendImage1)
-        formData.append("image2", backendImage2)
-        formData.append("image3", backendImage3)
+        if(backendImage1) {formData.append("image1", backendImage1)}
+        if(backendImage1) {formData.append("image2", backendImage2)}
+        if(backendImage1) {formData.append("image3", backendImage3)}
         formData.append("description", description)
         formData.append("rent", rent)
         formData.append("city", city)
@@ -70,6 +73,21 @@ const handleAddListing = async()=>{
       }
 }
 
+
+const handleViewCard = async(id)=>{
+  try {
+    let result = await axios.get( serverUrl + `/api/listing/findlistingByid/${id}`, {withCredentials:true})
+    console.log(result.data);
+    
+    setCardDetails(result.data)
+    navigate("/viewcard")
+    
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
 const getListing = async()=>{
   try {
     let result = await axios.get(serverUrl + "/api/listing/get", {withCredentials:true})
@@ -80,11 +98,6 @@ const getListing = async()=>{
     
   }
 }
-
-useEffect(() => {
-  getListing()
-}, [adding])
-
 
 let value={
     title,setTitle,
@@ -102,8 +115,16 @@ let value={
     adding, setAdding,
     handleAddListing,
     listingData, setListingData,
-    getListing, newListData, setNewListData
+    getListing, newListData, setNewListData, handleViewCard,
+    cardDetails, setCardDetails,
+    updating, setUpdating,
+    deleting, setDeleting
 }
+
+useEffect(() => {
+  getListing()
+}, [adding, updating, deleting])
+
   return (
     <div>
       <listingDataContext.Provider value={value} >

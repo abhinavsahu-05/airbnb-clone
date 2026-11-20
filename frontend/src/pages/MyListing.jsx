@@ -17,11 +17,11 @@ function MyListing() {
         <FaArrowLeftLong className="w-[25px] h-[25px] text-[white]" />
       </div>
 
-      <div className="w-[50%] h-[10%] border-[2px] border-[#908c8c] p-[15px] flex items-center justify-center text-[30px] rounded-md text-[#613b3b] font-semibold mt-[20px] md:w-[600px]">
+      <div className="w-[50%] h-[10%] border-[2px] border-[#908c8c] p-[15px] flex items-center justify-center text-[30px] rounded-md text-[#613b3b] font-semibold mt-[70px] md:w-[600px]">
         MY LISTING
       </div>
 
-        <div className='w-[100vw] flex items-center justify-center gap-[25px] flex-wrap mt-[250px] md:mt-[180px]'>
+        <div className='w-[100vw] flex items-center justify-center gap-[25px] flex-wrap mt-[250px] md:mt-[130px]'>
     {userData.listing.map((list) => (
       <Card title={list.title}
         landmark={list.landmark}
@@ -30,7 +30,11 @@ function MyListing() {
         image2={list.image2}
         image3={list.image3}
         rent={list.rent}
-        id={list._id} />
+        id={list._id}
+        isBooked={list.isBooked}
+        ratings={list.ratings}
+        host={list.host}
+         />
     ))}
   </div>
 

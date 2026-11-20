@@ -139,9 +139,9 @@ function Nav() {
                 </li>
                 <li
                   className=" w-[100%] px-[15px] py-[10px] hover:bg-[#f4f3f3] cursor-pointer "
-                  onClick={() => setShowPopup(true)}
+                  onClick={() => {navigate("/mybooking");setShowPopup(true)}}
                 >
-                  Check Booking
+                  My Booking
                 </li>
               </ul>
             </div>

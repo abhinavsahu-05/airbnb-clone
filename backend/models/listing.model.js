@@ -1,54 +1,66 @@
-import mongoose from "mongoose"
-import { User } from "./user.model.js"
+import mongoose from "mongoose";
+import { User } from "./user.model.js";
 
-const listingSchema = new mongoose.Schema({
-    title:{
-        type: String,
-        required: true
+const listingSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
     },
-    description:{
-        type: String,
-        required: true
+    description: {
+      type: String,
+      required: true,
     },
-    host:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true
+    host: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
-    image1:{
-        type: String,
-        required: true
+    guest: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-     image2:{
-        type: String,
-        required: true
+    image1: {
+      type: String,
+      required: true,
     },
-     image3:{
-        type: String,
-        required: true
+    image2: {
+      type: String,
+      required: true,
     },
-    rent:{
+    image3: {
+      type: String,
+      required: true,
+    },
+    rent: {
+      type: Number,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    landmark: {
+      type: String,
+      required: true,
+    },
+    category: {
+      type: String,
+      required: true,
+    },
+    ratings:{
         type: Number,
-        required: true
+        min:0,
+        max:5,
+        default:0
     },
-    city:{
-        type:String,
-        required: true  
+    isBooked: {
+      type: Boolean,
+      default: false,
+      required: true,
     },
-    landmark:{
-        type:String,
-        required: true  
-    },
-    category:{
-         type:String,
-        required: true  
-    },
-    isBooked:{
-        type:Boolean,
-        default: false,
-        required: true  
-    }
+  },
+  { timestamps: true },
+);
 
-}, {timestamps:true})
-
-export const Listing = mongoose.model("Listing", listingSchema)
+export const Listing = mongoose.model("Listing", listingSchema);

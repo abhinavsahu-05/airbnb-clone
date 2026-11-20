@@ -6,6 +6,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import userRouter from './routes/user.route.js'
 import listingRouter from './routes/listing.route.js'
+import bookingRouter from './routes/booking.routes.js'
 dotenv.config()
 
 const app = express()
@@ -26,6 +27,7 @@ app.use(cors({
 app.use("/api/auth", router)
 app.use("/api/user", userRouter)
 app.use("/api/listing", listingRouter)
+app.use("/api/booking", bookingRouter)
 
 app.listen(port, async()=>{
    await connectDb()

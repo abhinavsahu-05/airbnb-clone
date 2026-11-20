@@ -29,7 +29,7 @@ function UserContext({children}) {
         getCurrentUser()
     },[] )
 
-let value={ userData, setUserData }
+let value={ userData, setUserData, getCurrentUser }
 
   return (
       <UserDataContext.Provider value={value} >

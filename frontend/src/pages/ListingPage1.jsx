@@ -143,18 +143,6 @@ const handleImage3=(e)=>{
             />
           </div>
 
-          {/* <div className='flex flex-col gap-2'>
-            <label htmlFor="category" className='text-xl font-medium'>Category</label>
-            <input
-              className='font-small text-md p-1.5 overflow-hidden border-2 rounded-lg'
-              required
-              type="text"
-              id="category"
-              onChange={(e)=>setCategory(e.target.value)}
-              value={category}
-            />
-          </div> */}
-
           <button className='font-bold text-lg bg-[red] py-2 px-20 text-center rounded-xl mt-5 self-start transition-transform active:scale-95 duration-300 '>
             Next
           </button>
