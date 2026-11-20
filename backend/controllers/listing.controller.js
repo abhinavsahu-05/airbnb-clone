@@ -1,4 +1,3 @@
-import { triggerAsyncId } from "async_hooks";
 import uploadOnCloudinary from "../config/cloudinary.js";
 import { Listing } from "../models/listing.model.js";
 import { User } from "../models/user.model.js";

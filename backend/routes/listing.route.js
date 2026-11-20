@@ -3,7 +3,7 @@ import isAuth from "../middlewares/isAuth.middleware.js"
 import { upload } from "../middlewares/multer.js"
 import { addListing, deleteListing, findListing, getListing, ratingListing, search, updateListing } from "../controllers/listing.controller.js"
 
-let listingRouter = express(Router())
+let listingRouter = express.Router()
 
 listingRouter.post("/add", isAuth, upload.fields([
     {name:"image1", maxCount:1},
