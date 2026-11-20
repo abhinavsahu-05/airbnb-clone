@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../assets/Airbnb-Logo.png";
 import { useNavigate } from "react-router-dom";
 
@@ -26,8 +26,16 @@ function Nav() {
 
   let { serverUrl } = useContext(authDataContext);
   let [cate, setCate] = useState();
-  let { listingData, setListingData, newListData, setNewListData } =
-    useContext(listingDataContext);
+  let [input, setInput] = useState("");
+  let {
+    listingData,
+    setListingData,
+    newListData,
+    setNewListData,
+    searchData,
+    handleSearch,
+    handleViewCard
+  } = useContext(listingDataContext);
   let { userData, setUserData } = useContext(UserDataContext);
 
   const handleLogout = async () => {
@@ -54,6 +62,18 @@ function Nav() {
     }
   };
 
+   const handleClick = (id) => {
+    if (userData) {
+      handleViewCard(id);
+    } else {
+      navigate("/login");
+    }
+  };
+
+  useEffect(() => {
+    handleSearch(input);
+  }, [input]);
+
   return (
     <div className="sticky top-0 z-50 bg-white">
       <div className="w-full min-h-22.5 border-b  px-[20px] flex items-center justify-between md:px-[40px] ">
@@ -66,6 +86,8 @@ function Nav() {
             className=" w-[100%] px-[30px] py-[10px] border-[2px] border-[#bdbaba] outline-none overflow-auto rounded-[30px] text-[17px] "
             type="text"
             placeholder="Any Where | Any Location | Any City"
+            onChange={(e) => setInput(e.target.value)}
+            value={input}
           />
           <button className="absolute p-[10px] rounded-[50px] bg-[red] right-[3%] top-[5px] ">
             <IoIosSearch className=" w-[20px] h-[20px] text-white " />
@@ -133,13 +155,19 @@ function Nav() {
                 </li>
                 <li
                   className=" w-[100%] px-[15px] py-[10px] hover:bg-[#f4f3f3] cursor-pointer "
-                  onClick={() => {setShowPopup(true); navigate("/mylisting") }}
+                  onClick={() => {
+                    setShowPopup(true);
+                    navigate("/mylisting");
+                  }}
                 >
                   My Listing
                 </li>
                 <li
                   className=" w-[100%] px-[15px] py-[10px] hover:bg-[#f4f3f3] cursor-pointer "
-                  onClick={() => {navigate("/mybooking");setShowPopup(true)}}
+                  onClick={() => {
+                    navigate("/mybooking");
+                    setShowPopup(true);
+                  }}
                 >
                   My Booking
                 </li>
@@ -147,8 +175,19 @@ function Nav() {
             </div>
           )}
         </div>
-
         {/* Code for popup ends here */}
+
+        {searchData?.length > 0 && (
+          <div className="w-[100vw] h-[450px] flex flex-col gap-[20px] absolute top-[50%] overflow-auto left-[0] justify-start items-center">
+            <div className="max-w-[700px] w-[100vw] h-[300px] overflow-hidden flex flex-col bg-[#fefdfd] p-[20px] rounded-lg border-[1px] h border-[#a2a1a1] cursor-pointer">
+              {searchData.map((search) => (
+                <div className="border-b border-[black] p-[10px]" onClick={()=>handleClick(search._id)} >
+                  {search.title} in {search.landmark},{search.city}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className=" w-[100%] h-[60px] flex items-center justify-center block md:hidden  ">
@@ -157,6 +196,8 @@ function Nav() {
             className=" w-[100%] px-[17px] overflow-auto py-[10px] border-[2px] border-[#bdbaba] outline-none  rounded-[30px] text-[16px] font-semibold  "
             type="text"
             placeholder="Any Where | Any Location | Any City"
+            onChange={(e) => setInput(e.target.value)}
+            value={input}
           />
           <button className="absolute p-[10px] rounded-[50px] bg-[red] right-[3%] top-[5px] ">
             <IoIosSearch className=" w-[20px] h-[20px] text-white " />

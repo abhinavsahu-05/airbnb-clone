@@ -28,7 +28,7 @@ let [listingData, setListingData] = useState([])
 let [category, setCategory] = useState("")
  let [newListData, setNewListData] = useState([])
  let [cardDetails, setCardDetails] = useState(null)
-
+let [searchData, setSearchData] = useState([])
 let {serverUrl} = useContext(authDataContext)
 let navigate = useNavigate()
 
@@ -90,6 +90,16 @@ const handleViewCard = async(id)=>{
     
   }
 }
+const handleSearch = async (data)=>{
+  try {
+    let result = await axios.get(serverUrl + `/api/listing/search?query=${data}`)
+    setSearchData(result.data)
+  } catch (error) {
+    setSearchData(null)
+    console.log(error);
+    
+  }
+}
 
 const getListing = async()=>{
   try {
@@ -121,7 +131,8 @@ let value={
     getListing, newListData, setNewListData, handleViewCard,
     cardDetails, setCardDetails,
     updating, setUpdating,
-    deleting, setDeleting
+    deleting, setDeleting,handleSearch,
+    searchData, setSearchData
 }
 
 useEffect(() => {
