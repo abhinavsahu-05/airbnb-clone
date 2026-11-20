@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { authDataContext } from '../context/AuthContext';
 import axios from 'axios'
 import { UserDataContext } from '../context/UserContext';
+import { toast } from 'react-toastify';
 
 
 function Signup() {
@@ -32,11 +33,13 @@ function Signup() {
         setLoading(false)
         setUserData(result.data)
         navigate("/")
+        toast.success("Signup Successfully")
         console.log(result);
         
       } catch (error) {
         setLoading(false)
         console.log(error);
+        toast.error(error.response.data.message)
         
       }
     }

@@ -16,7 +16,7 @@ function BookingContext({ children }) {
   let { getListing } = useContext(listingDataContext);
   let [bookingData, setBookingData] = useState([]);
   let [booking, setBooking] = useState(false);
-  let navigate = useNavigate()
+  let navigate = useNavigate();
 
   const handleBooking = async (id) => {
     setBooking(true);
@@ -31,9 +31,11 @@ function BookingContext({ children }) {
       setBookingData(result.data);
       console.log(result.data);
       setBooking(false);
-      navigate("/booked")
+      navigate("/booked");
+      toast.success("Booking Successfully");
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message);
       setBooking(false);
     }
   };
@@ -46,8 +48,10 @@ function BookingContext({ children }) {
       await getCurrentUser();
       await getListing();
       console.log(result.data);
+      toast.success("Booking Cancelled Successfully");
     } catch (error) {
       console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 

@@ -8,6 +8,7 @@ import axios from "axios";
 import { authDataContext } from "../context/AuthContext";
 import { FaStar } from "react-icons/fa";
 import { bookingDataContext } from "../context/BookingContext";
+import { toast } from "react-toastify";
 
 function ViewCard() {
   let navigate = useNavigate();
@@ -39,7 +40,7 @@ function ViewCard() {
     tax,
     setTax,
     handleBooking,
-    booking
+    booking,
   } = useContext(bookingDataContext);
 
   useEffect(() => {
@@ -83,6 +84,7 @@ function ViewCard() {
       setUpdating(false);
       console.log(result);
       navigate("/");
+      toast.success("Listing Updated Successfully");
       setTitle("");
       setDescription("");
       setBackendImage1(null);
@@ -94,6 +96,7 @@ function ViewCard() {
     } catch (error) {
       setUpdating(false);
       console.log(error);
+      toast.error(error.response.data.message);
     }
   };
 
@@ -104,12 +107,16 @@ function ViewCard() {
         serverUrl + `/api/listing/delete/${cardDetails._id}`,
         { withCredentials: true },
       );
-      setDeleting(false);
-      navigate("/");
       console.log(result.data);
+      navigate("/");
+      toast.success("Listing Deleted Successfully");
+      setDeleting(false);
+
     } catch (error) {
       setDeleting(false);
       console.log(error);
+      toast.error(error.response.data.message);
+
     }
   };
 
@@ -212,76 +219,108 @@ function ViewCard() {
 
       {updatePopUp && (
         <div className="w-full min-h-screen fixed inset-0 z-[100] bg-[#000000a9] backdrop-blur-sm flex items-center justify-center px-3 pt-20 pb-4 sm:px-5 sm:pt-24">
-          {/* Cross - Top Left */}
+          {/* Cross */}
           <RxCross2
             className="w-[32px] h-[32px] sm:w-[38px] sm:h-[38px] bg-[red] text-white cursor-pointer rounded-full p-1 fixed top-4 left-3 sm:top-6 sm:left-6 md:top-[5%] md:left-[30px]"
             onClick={() => setUpdatePopUp(false)}
           />
 
-          {/* Update Title - Top Right */}
+          {/* Title */}
           <div className="text-[14px] sm:text-[18px] md:text-[20px] bg-[#f14242] text-white px-4 py-2 sm:px-6 sm:py-3 md:px-8 rounded-[30px] shadow-lg fixed top-4 right-3 sm:top-6 sm:right-6 md:top-[5%] md:right-[25px]">
             Update your details
           </div>
 
-          <form className="w-[90%] max-w-[450px] min-h-[450px] max-h-[90vh] overflow-y-auto bg-[#f7fbfcfe] p-4 sm:p-5 rounded-lg flex items-center flex-col gap-2 border border-[#dedddd]" 
-          onSubmit={(e)=> e.preventDefault()}
-          >
+          {/* Update Form */}
+          <form className="w-full max-w-2xl max-h-[85vh] overflow-y-auto overflow-x-hidden rounded-2xl bg-white p-5 sm:p-8 flex flex-col gap-5 [scrollbar-width:none]">
             <h1 className="w-full flex items-center justify-center text-xl sm:text-[25px] border-b border-[#a3a3a3] py-3">
-              Confirm & Book
+              Update Listing
             </h1>
 
-            <div className="w-full flex-1 mt-2 rounded-lg p-2 sm:p-[10px]">
-              <h3 className="text-lg sm:text-[19px] font-semibold">
-                Your Trip -
-              </h3>
+            {/* Title */}
+            <input
+              type="text"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="w-full border-2 border-[#555656] rounded-[10px] px-3 py-2"
+            />
 
-              <div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-start gap-2 sm:gap-4 mt-5">
-                <label
-                  htmlFor="checkIn"
-                  className="text-base sm:text-lg sm:w-[85px] shrink-0"
-                >
-                  CheckIn
-                </label>
+            {/* Description */}
+            <textarea
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full border-2 border-[#555656] rounded-[10px] px-3 py-2 min-h-[100px]"
+            />
 
-                <input
-                  type="date"
-                  min={minDate}
-                  id="checkIn"
-                  className="border-[#555656] border-2 w-full sm:flex-1 sm:min-w-0 h-10 rounded-[10px] bg-transparent px-2 text-sm sm:text-base"
-                  required
-                  onChange={(e) => setCheckIn(e.target.value)}
-                  value={checkIn}
-                />
-              </div>
-
-              <div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-start gap-2 sm:gap-4 mt-6">
-                <label
-                  htmlFor="checkOut"
-                  className="text-base sm:text-lg sm:w-[85px] shrink-0"
-                >
-                  Checkout
-                </label>
-
-                <input
-                  type="date"
-                  min={minDate}
-                  id="checkOut"
-                  className="border-[#555656] border-2 w-full sm:flex-1 sm:min-w-0 h-10 rounded-[10px] bg-transparent px-2 text-sm sm:text-base"
-                  required
-                  onChange={(e) => setCheckOut(e.target.value)}
-                  value={checkOut}
-                />
-              </div>
-
-              <div className="w-full flex items-center justify-center mt-6">
-                <button className="w-full sm:w-[85%] font-bold bg-[red] py-3 px-6 text-center rounded-lg text-base sm:text-lg transition-transform active:scale-95 duration-300"
-                disabled={booking} 
-                onClick={()=>handleBooking(cardDetails._id)}
-                >
-                  {booking ? "Booking..." : "Book Now"}
-                </button>
-              </div>
+            {/* Image 1 */}
+            <div className="w-full">
+              <label className="text-sm font-semibold">Image 1</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImage1}
+                className="w-full border-2 border-[#555656] rounded-[10px] px-2 py-2 mt-1"
+              />
             </div>
+
+            {/* Image 2 */}
+            <div className="w-full">
+              <label className="text-sm font-semibold">Image 2</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImage2}
+                className="w-full border-2 border-[#555656] rounded-[10px] px-2 py-2 mt-1"
+              />
+            </div>
+
+            {/* Image 3 */}
+            <div className="w-full">
+              <label className="text-sm font-semibold">Image 3</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImage3}
+                className="w-full border-2 border-[#555656] rounded-[10px] px-2 py-2 mt-1"
+              />
+            </div>
+
+            {/* Rent */}
+            <input
+              type="number"
+              placeholder="Rent"
+              value={rent}
+              onChange={(e) => setRent(e.target.value)}
+              className="w-full border-2 border-[#555656] rounded-[10px] px-3 py-2"
+            />
+
+            {/* City */}
+            <input
+              type="text"
+              placeholder="City"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className="w-full border-2 border-[#555656] rounded-[10px] px-3 py-2"
+            />
+
+            {/* Landmark */}
+            <input
+              type="text"
+              placeholder="Landmark"
+              value={landmark}
+              onChange={(e) => setLandmark(e.target.value)}
+              className="w-full border-2 border-[#555656] rounded-[10px] px-3 py-2"
+            />
+
+            {/* Update Button */}
+            <button
+              type="submit"
+              disabled={updating}
+              className="w-full sm:w-[85%] font-bold bg-[red] py-3 px-6 text-center rounded-lg text-base sm:text-lg text-white transition-transform active:scale-95 duration-300"
+            >
+              {updating ? "Updating..." : "Update Listing"}
+            </button>
           </form>
         </div>
       )}
@@ -295,8 +334,9 @@ function ViewCard() {
 
           <div></div>
 
-          <form className="w-[90%] max-w-[450px] min-h-[450px] max-h-[90vh] overflow-y-auto bg-[#f7fbfcfe] p-4 sm:p-5 rounded-lg flex items-center flex-col gap-2 border border-[#dedddd]"
-          onSubmit={(e)=> e.preventDefault()}
+          <form
+            className="w-[90%] max-w-[450px] min-h-[450px] max-h-[90vh] overflow-y-auto bg-[#f7fbfcfe] p-4 sm:p-5 rounded-lg flex items-center flex-col gap-2 border border-[#dedddd]"
+            onSubmit={(e) => e.preventDefault()}
           >
             <h1 className="w-full flex items-center justify-center text-xl sm:text-[25px] border-b border-[#a3a3a3] py-3">
               Confirm & Book
@@ -340,8 +380,9 @@ function ViewCard() {
               </div>
 
               <div className="w-full flex items-center justify-center mt-6">
-                <button className="w-full sm:w-fit font-bold bg-[red] py-2 px-6 sm:px-12 md:px-16 text-center rounded-lg text-base sm:text-lg transition-transform active:scale-95 duration-300"
-                onClick={()=>handleBooking(cardDetails._id)}
+                <button
+                  className="w-full sm:w-fit font-bold bg-[red] py-2 px-6 sm:px-12 md:px-16 text-center rounded-lg text-base sm:text-lg transition-transform active:scale-95 duration-300"
+                  onClick={() => handleBooking(cardDetails._id)}
                 >
                   Book Now
                 </button>

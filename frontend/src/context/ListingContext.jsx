@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { authDataContext } from './AuthContext';
 import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export const listingDataContext = createContext()
 
@@ -53,6 +54,7 @@ const handleAddListing = async()=>{
         setAdding(false)   
         console.log(result);
         navigate("/")
+         toast.success("Listing Added Successfully")
         setTitle("")
         setDescription("")
         setFrontEndImage1(null)
@@ -69,6 +71,7 @@ const handleAddListing = async()=>{
         } catch (error) {
         setAdding(false)
         console.log(error);
+         toast.error(error.response.data.message)
         
       }
 }

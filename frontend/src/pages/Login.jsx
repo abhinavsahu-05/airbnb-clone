@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { authDataContext } from '../context/AuthContext';
 import { UserDataContext } from '../context/UserContext';
+import { toast } from 'react-toastify';
 
 function Login() {
 
@@ -31,10 +32,12 @@ let {serverUrl, loading, setLoading} = useContext(authDataContext)
         setUserData(result.data)
         navigate("/")
         console.log(result);
+        toast.success("Login Successfully")
         
       } catch (error) {
         setLoading(false)
         console.log(error);
+        toast.error(error.response.data.message)
         
       }
     }
