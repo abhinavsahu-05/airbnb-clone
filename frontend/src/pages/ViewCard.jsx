@@ -111,12 +111,10 @@ function ViewCard() {
       navigate("/");
       toast.success("Listing Deleted Successfully");
       setDeleting(false);
-
     } catch (error) {
       setDeleting(false);
       console.log(error);
       toast.error(error.response.data.message);
-
     }
   };
 
@@ -144,7 +142,7 @@ function ViewCard() {
     <div className="w-full min-h-screen bg-white flex items-center justify-start gap-[10px] flex-col overflow-auto relative py-6">
       <div
         className="w-[50px] h-[50px] bg-[red] cursor-pointer absolute top-[5%] left-[20px] rounded-full flex items-center justify-center"
-        onClick={() => navigate("/listingpage2")}
+        onClick={() => navigate("/")}
       >
         <FaArrowLeft className="w-[25px] h-[25px] text-white" />
       </div>
@@ -231,7 +229,13 @@ function ViewCard() {
           </div>
 
           {/* Update Form */}
-          <form className="w-full max-w-2xl max-h-[85vh] overflow-y-auto overflow-x-hidden rounded-2xl bg-white p-5 sm:p-8 flex flex-col gap-5 [scrollbar-width:none]">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleUpdateListing();
+            }}
+            className="w-full max-w-2xl max-h-[85vh] overflow-y-auto overflow-x-hidden rounded-2xl bg-white p-5 sm:p-8 flex flex-col gap-5 [scrollbar-width:none]"
+          >
             <h1 className="w-full flex items-center justify-center text-xl sm:text-[25px] border-b border-[#a3a3a3] py-3">
               Update Listing
             </h1>
@@ -331,8 +335,6 @@ function ViewCard() {
             className="w-[32px] h-[32px] sm:w-[38px] sm:h-[38px] bg-[red] text-white cursor-pointer rounded-full p-1 fixed top-4 left-3 sm:top-6 sm:left-6 md:top-[7%] md:left-[30px] absolute"
             onClick={() => setBookingPopUp(false)}
           />
-
-          <div></div>
 
           <form
             className="w-[90%] max-w-[450px] min-h-[450px] max-h-[90vh] overflow-y-auto bg-[#f7fbfcfe] p-4 sm:p-5 rounded-lg flex items-center flex-col gap-2 border border-[#dedddd]"

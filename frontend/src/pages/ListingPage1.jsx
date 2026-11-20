@@ -33,7 +33,7 @@ const handleImage3=(e)=>{
     <div>
 
       <div className='w-full flex justify-between items-center px-5 sm:px-10 md:px-20 pt-7 sm:pt-10 gap-3'>
-        <div className='bg-[red] p-3 rounded-full text-xl sm:text-2xl shrink-0 cursor-pointer'>
+        <div className='bg-[red] p-3 rounded-full text-xl sm:text-2xl shrink-0 cursor-pointer'onClick={()=> navigate("/")} >
           <span><FaArrowLeft /></span>
         </div>
 

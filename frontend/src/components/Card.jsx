@@ -61,10 +61,10 @@ function Card({
 </div>
 </div>}
 
-      <div className="w-[100%] h-[67%] rounded-lg overflow-auto flex ">
-        <img src={image1} alt="" className="w-[100%] flex-shrink-0" />
-        <img src={image2} alt="" className="w-[100%] flex-shrink-0" />
-        <img src={image3} alt="" className="w-[100%] flex-shrink-0" />
+      <div className="w-full h-[67%] rounded-lg overflow-auto flex ">
+        <img src={image1} alt="" className="w-full  object-cover" />
+        <img src={image2} alt="" className="w-full  object-cover" />
+        <img src={image3} alt="" className="w-full  object-cover" />
       </div>
 
       <div className=" w-[100%] h-[33%] py-[20px] flex flex-col gap-[2px]">
